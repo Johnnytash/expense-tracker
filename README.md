@@ -1,4 +1,6 @@
-# ExpenSync: Expense Tracker
+# ExpenSync: Expense Tracker 
+
+https://expensync.netlify.app
 
 ExpenSync is a full-stack web application designed to help users track their income and expenses, promoting better financial management and addressing SDG 1: No Poverty. By providing clear visibility into personal finances, ExpenSync empowers users to make informed financial decisions.
 
