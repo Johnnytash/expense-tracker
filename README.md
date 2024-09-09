@@ -1,70 +1,102 @@
-# Getting Started with Create React App
+# ExpenSync: Expense Tracker
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+ExpenSync is a full-stack web application designed to help users track their income and expenses, promoting better financial management and addressing SDG 1: No Poverty. By providing clear visibility into personal finances, ExpenSync empowers users to make informed financial decisions.
 
-## Available Scripts
+## Tech Stack
 
-In the project directory, you can run:
+### Frontend
+- React.js
+- Material-UI for component styling
+- React Router for navigation
+- Formik and Yup for form handling and validation
+- Recharts for data visualization
 
-### `npm start`
+### Backend
+- Node.js
+- Express.js
+- MySQL database
+- Sequelize ORM
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Authentication
+- JSON Web Tokens (JWT) for session management
+- Bcrypt for password hashing
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Features
 
-### `npm test`
+- User registration and authentication
+- Add, edit, and delete income and expense transactions
+- Categorize transactions with tags
+- Visualize financial data with charts
+- Responsive design for mobile and desktop use
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Prerequisites
 
-### `npm run build`
+Before you begin, ensure you have the following installed:
+- Node.js (v14 or later)
+- MySQL
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Setup and Installation
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. Clone the repository:
+   ```
+   [git clone https://github.com/your-username/expense-tracker.git](https://github.com/Johnnytash/expense-tracker.git)
+   cd expense-tracker
+   ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. Set up the backend:
+   ```
+   cd expensync-backend
+   npm install
+   ```
 
-### `npm run eject`
+   Create a `.env` file in the backend directory with the following content:
+   ```
+   DB_NAME=your_database_name
+   DB_USER=your_mysql_username
+   DB_PASSWORD=your_mysql_password
+   DB_HOST=localhost
+   JWT_SECRET=your_jwt_secret
+   PORT=5000
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+3. Set up the frontend:
+   ```
+   cd ../expense-tracker
+   npm install
+   ```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+4. Create the MySQL database:
+   ```
+   mysql -u your_username -p
+   CREATE DATABASE your_database_name;
+   ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+5. Run database migrations:
+   ```
+   cd ../expensync-backend
+   npx sequelize-cli db:migrate
+   ```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Running the Application
 
-## Learn More
+1. Start the backend server:
+   ```
+   cd expensync-backend
+   npm start
+   ```
+   The server will start on http://localhost:5000
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+2. In a new terminal, start the frontend development server:
+   ```
+   cd expense-tracker
+   npm start
+   ```
+   The application will open in your default browser at http://localhost:3000
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Contributing
 
-### Code Splitting
+Contributions to ExpenSync are welcome! Please feel free to submit a Pull Request.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## License
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This project is licensed under the MIT License.
