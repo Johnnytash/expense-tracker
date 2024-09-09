@@ -38,23 +38,12 @@ export const AuthProvider = ({ children }) => {
     delete api.defaults.headers["Authorization"];
   };
 
-  const googleLogin = async (googleData) => {
-    try {
-      const response = await api.post("/auth/google", {
-        token: googleData.credential,
-      });
-      login(response.data);
-    } catch (error) {
-      console.error("Error during Google login:", error);
-    }
-  };
-
   if (loading) {
     return <div>Loading...</div>;
   }
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, googleLogin }}>
+    <AuthContext.Provider value={{ user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

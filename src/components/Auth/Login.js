@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import {
@@ -13,13 +12,11 @@ import {
   InputAdornment,
   IconButton,
   Link,
-  Divider,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useAuth } from "../../context/AuthContext";
-import { login, googleLogin } from "../../utils/api";
+import { login } from "../../utils/api";
 import { useNavigate, Link as RouterLink } from "react-router-dom";
-import { GoogleLogin } from "@react-oauth/google";
 
 const Login = () => {
   const { login: authLogin } = useAuth();
@@ -51,33 +48,6 @@ const Login = () => {
 
   const handleTogglePasswordVisibility = () => {
     setShowPassword(!showPassword);
-  };
-
-  useEffect(() => {
-    // This effect ensures the Google script is loaded
-    if (typeof window !== "undefined") {
-      window.onGoogleLibraryLoad = () => {
-        console.log("Google Sign-In library loaded");
-      };
-    }
-  }, []);
-
-  const handleGoogleLoginSuccess = async (credentialResponse) => {
-    try {
-      console.log("Google login success:", credentialResponse);
-      if (!credentialResponse.credential) {
-        throw new Error("No credential received from Google");
-      }
-      const data = await googleLogin(credentialResponse.credential);
-      console.log("Backend response:", data);
-      authLogin(data); // or login(data) for SignUp.js
-      navigate("/dashboard");
-    } catch (error) {
-      console.error("Google login error:", error);
-      setError(
-        "Google login failed. Please try again. Error: " + error.message
-      );
-    }
   };
 
   return (
@@ -151,23 +121,6 @@ const Login = () => {
               disabled={formik.isSubmitting}>
               {formik.isSubmitting ? "Logging In..." : "Log In"}
             </Button>
-            <Divider sx={{ my: 2 }}>OR</Divider>
-            <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
-              <GoogleLogin
-                clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-                onSuccess={handleGoogleLoginSuccess}
-                onError={(error) => {
-                  console.error("Google login failed", error);
-                  setError(
-                    "Google login failed. Please try again. Error: " + error
-                  );
-                }}
-                useOneTap
-                theme="filled_blue"
-                shape="rectangular"
-                text="signin_with"
-              />
-            </Box>
             {error && (
               <Typography color="error" align="center">
                 {error}

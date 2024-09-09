@@ -18,28 +18,17 @@ module.exports = (sequelize, DataTypes) => {
       },
       password: {
         type: DataTypes.STRING,
-        allowNull: true, // Allow null for Google users
-      },
-      googleId: {
-        type: DataTypes.STRING,
-        unique: true,
-        allowNull: true,
-      },
-      profilePicture: {
-        type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
       },
     },
     {
       hooks: {
         beforeCreate: async (user) => {
-          if (user.password) {
-            const salt = await bcrypt.genSalt(10);
-            user.password = await bcrypt.hash(user.password, salt);
-          }
+          const salt = await bcrypt.genSalt(10);
+          user.password = await bcrypt.hash(user.password, salt);
         },
         beforeUpdate: async (user) => {
-          if (user.changed("password") && user.password) {
+          if (user.changed("password")) {
             const salt = await bcrypt.genSalt(10);
             user.password = await bcrypt.hash(user.password, salt);
           }
@@ -49,9 +38,7 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   User.prototype.validPassword = async function (password) {
-    return this.password
-      ? await bcrypt.compare(password, this.password)
-      : false;
+    return await bcrypt.compare(password, this.password);
   };
 
   User.associate = function (models) {

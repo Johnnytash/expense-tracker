@@ -12,13 +12,11 @@ import {
   InputAdornment,
   IconButton,
   Link,
-  Divider,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useAuth } from "../../context/AuthContext";
-import { signup, googleLogin } from "../../utils/api";
+import { signup } from "../../utils/api";
 import { useNavigate, Link as RouterLink } from "react-router-dom";
-import { GoogleLogin } from "@react-oauth/google";
 
 const SignUp = () => {
   const { login } = useAuth();
@@ -63,18 +61,6 @@ const SignUp = () => {
 
   const handleToggleConfirmPasswordVisibility = () => {
     setShowConfirmPassword(!showConfirmPassword);
-  };
-
-  const handleGoogleLoginSuccess = async (credentialResponse) => {
-    try {
-      console.log("Google login success:", credentialResponse);
-      const data = await googleLogin(credentialResponse.credential);
-      login(data);
-      navigate("/dashboard");
-    } catch (error) {
-      console.error("Google login error:", error);
-      setError("Google login failed. Please try again.");
-    }
   };
 
   return (
@@ -189,23 +175,6 @@ const SignUp = () => {
               disabled={formik.isSubmitting}>
               {formik.isSubmitting ? "Signing Up..." : "Sign Up"}
             </Button>
-            <Divider sx={{ my: 2 }}>OR</Divider>
-            <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
-              <GoogleLogin
-                clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-                onSuccess={handleGoogleLoginSuccess}
-                onError={(error) => {
-                  console.error("Google login failed", error);
-                  setError(
-                    "Google login failed. Please try again. Error: " + error
-                  );
-                }}
-                useOneTap
-                theme="filled_blue"
-                shape="rectangular"
-                text="signin_with"
-              />
-            </Box>
             {error && (
               <Typography color="error" align="center">
                 {error}
