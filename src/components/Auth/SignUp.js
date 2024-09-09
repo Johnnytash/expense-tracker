@@ -192,11 +192,18 @@ const SignUp = () => {
             <Divider sx={{ my: 2 }}>OR</Divider>
             <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
               <GoogleLogin
+                clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
                 onSuccess={handleGoogleLoginSuccess}
-                onError={() => {
-                  console.error("Google login failed");
-                  setError("Google login failed. Please try again.");
+                onError={(error) => {
+                  console.error("Google login failed", error);
+                  setError(
+                    "Google login failed. Please try again. Error: " + error
+                  );
                 }}
+                useOneTap
+                theme="filled_blue"
+                shape="rectangular"
+                text="signin_with"
               />
             </Box>
             {error && (

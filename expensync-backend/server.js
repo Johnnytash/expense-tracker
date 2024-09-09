@@ -9,10 +9,14 @@ const app = express();
 
 // CORS configuration
 const corsOptions = {
-  origin: process.env.FRONTEND_URL || "http://localhost:3000",
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  origin: [
+    "http://localhost:3000",
+    "https://66deac93c84f8de7c99add75--expensync.netlify.app",
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
-  optionsSuccessStatus: 204,
+  optionsSuccessStatus: 200,
 };
 
 app.use(cors(corsOptions));
@@ -26,6 +30,11 @@ app.use((req, res, next) => {
     headers: req.headers,
     body: req.body,
   });
+  next();
+});
+
+app.use((req, res, next) => {
+  console.log(`Received ${req.method} request to ${req.path}`);
   next();
 });
 

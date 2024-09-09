@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "https://expensync-backend-3ed81c2cad0e.herokuapp.com/api/";
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/api";
 
 const api = axios.create({
   baseURL: API_URL,
@@ -11,13 +11,27 @@ const api = axios.create({
 
 export const googleLogin = async (token) => {
   try {
+    console.log("Sending Google token to backend");
     const response = await api.post("/auth/google", { token });
+    console.log("Received response from backend:", response.data);
     if (response.data.token) {
       localStorage.setItem("token", response.data.token);
+      console.log("Token stored in localStorage");
+    } else {
+      console.warn("No token received from backend");
     }
     return response.data;
   } catch (error) {
-    console.error("Google login error:", error.response?.data || error.message);
+    console.error("Error during Google login:", error);
+    if (error.response) {
+      console.error("Response data:", error.response.data);
+      console.error("Response status:", error.response.status);
+      console.error("Response headers:", error.response.headers);
+    } else if (error.request) {
+      console.error("No response received:", error.request);
+    } else {
+      console.error("Error message:", error.message);
+    }
     throw error;
   }
 };
